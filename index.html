@@ -1,0 +1,28 @@
+<html lang="en" ng-app='ticTacToe'>
+<head>
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="main.css"></head>
+<body>
+
+
+    <div ng-controller="TicTacToeCtrl">
+        <table>
+        {{ moves }}
+            <tr ng-repeat="dimension in dimensions">
+                <td ng-repeat="dimension in dimensions"
+                    ng-class="{'empty': !started,
+                               'player1': (firstPlayer() && started),
+                               'player2': (!firstPlayer && started)}"
+                    ng-init="isClicked = false, started = false"
+                    ng-click="isClicked = true; started = true; updateMoves()">
+                    {{ moves }}
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    <script src="myApp.js"></script>
+</body>
+</html>
