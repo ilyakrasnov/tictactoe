@@ -6,22 +6,24 @@
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js" type="text/javascript"></script> -->
 <link rel="stylesheet" type="text/css" href="main.css"></head>
 <body>
-    <div ng-controller="TicTacToeCtrl">
-        <table>
-        {{ moves }} - {{ game }} - won: {{ checkWin() }}
-            <tr ng-repeat="dimension in dimensions">
-                <td ng-repeat="dimension2 in dimensions"
-                    ng-class="{'won': checkWin(),
-                               'empty': !started,
-                               'player1': (firstPlayer() && started),
-                               'player2': (!firstPlayer() && started)}"
-                    ng-init="isClicked = false, started = false"
-                    ng-click="isClicked = true; started = true; updateMoves($parent.$index*3 + $index)">
-                    {{ game[$parent.$index*3 + $index] }}
-                </td>
-            </tr>
+    <div class="container">
+        <div ng-controller="TicTacToeCtrl">
+            <table>
+                <tr ng-animate="'animate'"
+                ng-repeat="dimension in dimensions">
+                    <td ng-repeat="dimension2 in dimensions"
+                        ng-class="{'won': checkWin(),
+                                   'empty': !started,
+                                   'player1': (firstPlayer() && started),
+                                   'player2': (!firstPlayer() && started)}"
+                        ng-init="isClicked = false, started = false"
+                        ng-click="isClicked = true; started = true; updateMoves($parent.$index*3 + $index)">
+                        {{ game[$parent.$index*3 + $index] }}
+                    </td>
+                </tr>
 
-        </table>
+            </table>
+        </div>
     </div>
     <script src="myApp.js"></script>
 </body>
