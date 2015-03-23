@@ -17,15 +17,13 @@
                         <td ng-repeat="dimension in dimensions"
                             ng-class="{'won': checkWin(),
                                        'empty': !checkWin() || gameStart()}"
-                            ng-init="isClicked = false, started = false"
-                            ng-click="isClicked = true; started = true; updateMoves($parent.$index*3 + $index)">
+                            ng-click="updateMoves($parent.$index*3 + $index)">
                             {{ game[$parent.$index*3 + $index] }}
                         </td>
                     </tr>
 
                 </table>
             </div>
-
             <div class="gameOver" ng-show="!checkWin() && gameOver()">
                 Game over!
                 <div class="btn-play-again" ng-click="playAgain()">Play again</div>
