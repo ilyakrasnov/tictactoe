@@ -27,7 +27,7 @@
             </table>
         </div>
 
-        <div class="gameOver" ng-show="gameOver()">
+        <div class="gameOver" ng-show="!checkWin() && gameOver()">
             Game over!
         </div>
         <div class="gameOver" ng-show="checkWin()">
