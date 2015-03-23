@@ -30,7 +30,7 @@ td {
 }
 
 .empty {
-   background-color: black;
+   background-color: #3F2860;
 }
 
 .player1 {
@@ -39,10 +39,10 @@ td {
 }
 
 .player2 {
-    background-color: blue;
+    background-color: #FA8B60;
     color: white;
 }
 
 .won {
-  background: green;
+  background: #90C5A9;
 }
