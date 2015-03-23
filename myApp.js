@@ -1,24 +1,35 @@
 angular.module('ticTacToe', [])
   .controller('TicTacToeCtrl', function($scope) {
     $scope.dimensions = [1, 2, 3]
-    $scope.game = []
-    $scope.players = ["X", "O"];
-    $scope.winner = null;
-
-    $scope.setClicked = function(){
-      $scope.class = "clicked";
-    }
+    $scope.players = ["O", "X"];
 
     $scope.moves = 0;
+    $scope.game = []
+
+    $scope.winners = [];
+    $scope.xScore = 0
+    $scope.oScore = 0
+
+    $scope.lastWinner = function(){
+     if ($scope.winners.length > 0)
+      return _.last($scope.winners)[0];
+    }
 
     $scope.updateMoves = function(position){
       if ($scope.moves == 9) return;
+      if ($scope.game[position] != null) return;
+
       $scope.moves++;
       $scope.game[position] =  $scope.players[$scope.moves%2];
 
       if ($scope.checkWin() == true) {
-        $scope.winner = $scope.game[position];
-        console.log($scope.players[$scope.moves%2]);
+
+        $scope.winners = $scope.winners.concat($scope.game[position].split(""));
+
+        if ($scope.lastWinner() == "X"){
+          $scope.xScore++;
+        }else
+          {$scope.oScore++;}
       }
     }
 
@@ -34,8 +45,19 @@ angular.module('ticTacToe', [])
               compare(game[2], game[4], game[6]));
     }
 
+
+    $scope.gameStart = function(){
+      return ($scope.moves == 0);
+    }
+
     $scope.gameOver = function() {
       return ($scope.moves >= 9 &&  $scope.checkWin != true);
+    }
+
+    $scope.playAgain = function(){
+      $scope.game = [];
+      $scope.moves = 0;
+      $scope.winners = [];
     }
 
     var compare = function(a, b, c) {
