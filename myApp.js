@@ -2,6 +2,8 @@ angular.module('ticTacToe', [])
   .controller('TicTacToeCtrl', function($scope) {
     $scope.dimensions = [1, 2, 3]
     $scope.game = []
+    $scope.players = ["X", "O"];
+    $scope.winner = null;
 
     $scope.setClicked = function(){
       $scope.class = "clicked";
@@ -10,9 +12,14 @@ angular.module('ticTacToe', [])
     $scope.moves = 0;
 
     $scope.updateMoves = function(position){
+      if ($scope.moves == 9) return;
       $scope.moves++;
-      $scope.game[position] =  ["X", 0][$scope.moves%2];
-      checkWin();
+      $scope.game[position] =  $scope.players[$scope.moves%2];
+
+      if ($scope.checkWin() == true) {
+        $scope.winner = $scope.game[position];
+        console.log($scope.players[$scope.moves%2]);
+      }
     }
 
     $scope.checkWin = function(){
@@ -27,9 +34,8 @@ angular.module('ticTacToe', [])
               compare(game[2], game[4], game[6]));
     }
 
-    $scope.currentCell = 0;
-    $scope.updateCurrentCell = function(){
-      $scope.currentCell ++;
+    $scope.gameOver = function() {
+      return ($scope.moves >= 9 &&  $scope.checkWin != true);
     }
 
     var compare = function(a, b, c) {

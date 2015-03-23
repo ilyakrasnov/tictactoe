@@ -8,6 +8,8 @@
 <body>
     <div class="container">
         <div ng-controller="TicTacToeCtrl">
+            {{ gameOver() }}
+        <div class="game">
             <table>
                 <tr ng-animate="'animate'"
                 ng-repeat="dimension in dimensions">
@@ -23,6 +25,16 @@
                 </tr>
 
             </table>
+        </div>
+
+        <div class="gameOver" ng-show="gameOver()">
+            Game over!
+        </div>
+        <div class="gameOver" ng-show="checkWin()">
+            {{ winner }} Won!
+        </div>
+
+
         </div>
     </div>
     <script src="myApp.js"></script>
