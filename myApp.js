@@ -19,6 +19,7 @@ angular.module('ticTacToe', [])
     }
 
     $scope.updateMoves = function(position){
+      console.log($scope.gameStart());
       if ($scope.moves == 9) return;
       if ($scope.game[position] != null) return;
 
@@ -34,8 +35,7 @@ angular.module('ticTacToe', [])
         updateScore();
         return
       }
-      console.log($scope.multiplayer);
-      console.log(computersMove());
+
       if ($scope.multiplayer == false && computersMove() == true) {
         next_position = _.sample($scope.emptyCells);
         $scope.updateMoves(next_position);

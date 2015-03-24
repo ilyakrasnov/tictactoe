@@ -70,12 +70,16 @@
             <div class="playerMode">
                 <div class="multiPlayer"
                      ng-show="multiplayer"
-                     ng-click="setComputerPlayer()">
+                     ng-init="disabled = gameStart()"
+                     ng-disabled='disabled'
+                     ng-click="disabled || setComputerPlayer()">
                      Two Players
                 </div>
                 <div class="singlelayer"
                      ng-hide="multiplayer"
-                     ng-click="setComputerPlayer()">
+                     ng-init="disabled = gameStart()"
+                     ng-disabled='disabled'
+                     ng-click="disabled || setComputerPlayer()">
                      Play Against Super Computer
                 </div>
             </div>
