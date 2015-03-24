@@ -26,10 +26,7 @@ angular.module('ticTacToe', [])
 
         $scope.winners = $scope.winners.concat($scope.game[position].split(""));
 
-        if ($scope.lastWinner() == "X"){
-          $scope.xScore++;
-        }else
-          {$scope.oScore++;}
+        updateScore();
       }
     }
 
@@ -67,7 +64,16 @@ angular.module('ticTacToe', [])
       $scope.playAgain();
     }
 
+// Helper functions
+
     var compare = function(a, b, c) {
       return a == b && b == c && a != null
+    }
+
+    var updateScore = function(){
+      if ($scope.lastWinner() == "X"){
+          $scope.xScore++;
+      }else
+          {$scope.oScore++;}
     }
   });
