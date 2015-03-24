@@ -10,28 +10,6 @@
     <div class="container">
         <div ng-controller="TicTacToeCtrl">
 
-            <div class="game">
-                <table class="game-table">
-                    <tr ng-animate="'animate'"
-                    ng-repeat="dimension in dimensions">
-                        <td ng-repeat="dimension in dimensions"
-                            ng-class="{'won': checkWin(),
-                                       'empty': !checkWin() || gameStart()}"
-                            ng-click="updateMoves($parent.$index*3 + $index)">
-                            {{ game[$parent.$index*3 + $index] }}
-                        </td>
-                    </tr>
-
-                </table>
-            </div>
-            <div class="gameOver" ng-show="!checkWin() && gameOver()">
-                Game over!
-                <div class="btn-play-again" ng-click="playAgain()">Play again</div>
-            </div>
-            <div class="gameOver" ng-show="checkWin()">
-                {{ lastWinner() }} Won!
-                <div class="btn-play-again" ng-click="playAgain()">Play again</div>
-            </div>
             <div class="score">
                 <table class="score-table">
                     <thead>
@@ -48,14 +26,57 @@
                     </tbody>
                 </table>
             </div>
+<!-- Game board and overlays -->
+            <div class="gameBoard">
+                <!-- Board -->
+                <div class="game">
+                    <table class="game-table">
+                        <tr ng-animate="'animate'"
+                        ng-repeat="dimension in dimensions">
+                            <td ng-repeat="dimension in dimensions"
+                                ng-class="{'won': checkWin(),
+                                           'empty': !checkWin() || gameStart()}"
+                                ng-click="updateMoves($parent.$index*3 + $index)">
+                                {{ game[$parent.$index*3 + $index] }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
+<!-- Overlays -->
+                <div class="gameOver" ng-show="!checkWin() && gameOver()">
+                    <div class="gameResults">
+                    Game over!
+                    </div>
+
+
+                    <div class="buttons">
+                        <div class="btn-play-again" ng-click="playAgain()">Play again</div>
+                        <div class="reset" ng-click="reset()">Start all over</div>
+                    </div>
+
+                </div>
+                <div class="gameOver" ng-show="checkWin()">
+                    <div class="gameResults">
+                    {{ lastWinner() }} Won!
+                    </div>
+                    <div class="buttons">
+                        <div class="btn-play-again" ng-click="playAgain()">Play again</div>
+                        <div class="reset" ng-click="reset()">Start all over</div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+            <footer>
+                &copy Ilya Krasnov
+            </footer>
         </div>
     </div>
+
     <script src="myApp.js"></script>
 </body>
 </html>
-
-<!-- ng-class="{'won': checkWin(),
-                                   'empty': !started,
-                                   'player1': (firstPlayer()),
-                                   'player2': (!firstPlayer())}" -->

@@ -7,8 +7,8 @@ angular.module('ticTacToe', [])
     $scope.game = []
 
     $scope.winners = [];
-    $scope.xScore = 0
-    $scope.oScore = 0
+    $scope.xScore = 0;
+    $scope.oScore = 0;
 
     $scope.lastWinner = function(){
      if ($scope.winners.length > 0)
@@ -58,6 +58,13 @@ angular.module('ticTacToe', [])
       $scope.game = [];
       $scope.moves = 0;
       $scope.winners = [];
+    }
+
+    $scope.reset = function(){
+      $scope.xScore = 0;
+      $scope.oScore = 0;
+
+      $scope.playAgain();
     }
 
     var compare = function(a, b, c) {
