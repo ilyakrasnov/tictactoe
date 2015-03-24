@@ -64,11 +64,11 @@ padding-top: 105px;
 }
 
 .btn-play-again {
-  background-color: #3F2860;
+  background-color: rgba(239, 109, 59, 1);
 }
 
 .reset {
-  background-color: rgba(239, 109, 59, 1);
+  background-color: #3F2860;
   margin-left: auto;
 }
 
