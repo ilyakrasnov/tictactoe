@@ -3,7 +3,7 @@ angular.module('ticTacToe', [])
     $scope.dimensions = [1, 2, 3]
     $scope.players = ["O", "X"];
 
-    $scope.multiplayer = true
+    $scope.multiplayer = false
 
     $scope.moves = 0;
     $scope.game = []
