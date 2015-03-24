@@ -25,6 +25,7 @@ table {
 .gameBoard {
 position: absolute;
 padding-top: 105px;
+
 }
 
 .game {
@@ -39,7 +40,7 @@ padding-top: 105px;
 .gameOver {
   height: 302px;
   width: 300px;
-  background: rgba(122, 154, 149, 0.9);
+  background: rgba(122, 154, 149, 0.95);
   position: relative;
   text-align: center;
   color: white;
@@ -52,6 +53,12 @@ padding-top: 105px;
   padding-top: 15px;
 }
 
+.game, .score {
+  -webkit-box-shadow: 7px 4px 15px -1px rgba(0,0,0,0.55);
+  -moz-box-shadow: 7px 4px 15px -1px rgba(0,0,0,0.55);
+  box-shadow: 7px 4px 15px -1px rgba(0,0,0,0.55);
+}
+
 .buttons {
   position: relative;
   top: 25%;
@@ -61,6 +68,9 @@ padding-top: 105px;
 .btn-play-again, .reset {
   width: 80%;
   margin: 15px auto 15px auto;
+  -webkit-box-shadow: 7px 4px 32px -8px rgba(0,0,0,0.55);
+  -moz-box-shadow: 7px 4px 32px -8px rgba(0,0,0,0.55);
+  box-shadow: 7px 4px 32px -8px rgba(0,0,0,0.55);
 }
 
 .btn-play-again {
@@ -83,15 +93,16 @@ padding-top: 105px;
   vertical-align:middle;
 }
 
-.empty {
+.empty, .won {
    background-color: #3F2860;
    color: white;
 }
 
-.won {
+
+/*.won {
   background: #90C5A9;
   color: white;
-}
+}*/
 
 /* Score table*/
 
@@ -123,13 +134,8 @@ padding-top: 105px;
   background-color: #EF6D3B;
 }
 
-.score-table td {
-  /*border: 1px solid #EF6D3B;*/
-}
-
 .score-table tr{
-
-  background-color: #90C5A9;
+  background: rgba(122, 154, 149, 1);
 }
 
 /* Footer */
