@@ -138,6 +138,21 @@ padding-top: 105px;
   background: rgba(122, 154, 149, 1);
 }
 
+
+/* Player mode toggle */
+.playerMode {
+  background-color: red;
+  line-height: 40px;
+  height:40px;
+  text-align: center;
+  clear: both;
+  width:100%;
+  position:absolute;
+  bottom:30px;
+  left:0;
+  font-size: 20px;
+}
+
 /* Footer */
 footer {
   text-align: right;
@@ -145,7 +160,7 @@ footer {
   width:100%;
   height:80px;
   position:absolute;
-  bottom:0;
+  bottom:-40;
   right:0;
   font-size: 10px;
 }

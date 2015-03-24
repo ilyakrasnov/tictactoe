@@ -3,7 +3,7 @@ angular.module('ticTacToe', [])
     $scope.dimensions = [1, 2, 3]
     $scope.players = ["O", "X"];
 
-    $scope.multiplayer = false
+    $scope.multiplayer = true
 
     $scope.moves = 0;
     $scope.game = []
@@ -34,16 +34,17 @@ angular.module('ticTacToe', [])
         updateScore();
         return
       }
-
-      if (computersMove() == true) {
+      console.log($scope.multiplayer);
+      console.log(computersMove());
+      if ($scope.multiplayer == false && computersMove() == true) {
         next_position = _.sample($scope.emptyCells);
         $scope.updateMoves(next_position);
       };
     }
 
-    // $scope.moveComputer = function() {
-    //   $scope.updateMoves(_.sample($scope.emptyCells));
-    // }
+    $scope.setComputerPlayer = function() {
+      $scope.multiplayer = !$scope.multiplayer;
+    }
 
     $scope.checkWin = function(){
       game = $scope.game
