@@ -36,8 +36,8 @@
                             <td ng-repeat="dimension in dimensions"
                                 ng-class="{'won': checkWin(),
                                            'empty': !checkWin() || gameStart()}"
-                                ng-click="updateMoves($parent.$index*3 + $index)">
-                                {{ game[$parent.$index*3 + $index] }}
+                                ng-click="updateMoves($parent.$index,$index)">
+                                {{ game[$parent.$index][$index] }}
                             </td>
                         </tr>
                     </table>
