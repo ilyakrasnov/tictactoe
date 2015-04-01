@@ -10,8 +10,8 @@ angular.module('ticTacToe', [])
     $scope.emptyCells = [[0, 1, 2],[0, 1, 2],[0, 1, 2]]
 
     $scope.winners = [];
-    $scope.xScore = 0;
-    $scope.oScore = 0;
+    // $scope.xScore = get;
+    // $scope.oScore = 0;
 
     $scope.lastWinner = function(){
      if ($scope.winners.length > 0)
@@ -28,10 +28,7 @@ angular.module('ticTacToe', [])
       $scope.game[position1][position2] =  $scope.players[$scope.moves%2];
 
       if ($scope.checkWin() == true) {
-
-        $scope.winners = $scope.winners.concat($scope.game[position1][position2].split(""));
-
-        updateScore();
+        $scope.winners = $scope.winners.concat($scope.game[position1][position2]);
         return
       }
 
@@ -69,15 +66,20 @@ angular.module('ticTacToe', [])
     $scope.playAgain = function(){
       $scope.game = [[],[],[]];
       $scope.moves = 0;
-      $scope.winners = [];
       $scope.emptyCells = [[0, 1, 2],[0, 1, 2],[0, 1, 2]]
     }
 
     $scope.reset = function(){
-      $scope.xScore = 0;
-      $scope.oScore = 0;
-
+      $scope.winners = [];
       $scope.playAgain();
+    }
+
+    $scope.canvasArray = function(n){
+      res = []
+      for (i = 1; i <= n; i++) {
+          res.push(i);
+      }
+      return res;
     }
 
 // Helper functions
@@ -89,22 +91,14 @@ angular.module('ticTacToe', [])
       return a != null && a == b && b == c
     }
 
-    var updateScore = function(){
-      if ($scope.lastWinner() == "X"){
-          $scope.xScore++;
-      }else
-          {$scope.oScore++;}
-    }
-
     var computersMove = function(){
       return ($scope.moves % 2 != 0)
     }
 
-    $scope.canvasArray = function(n){
-      res = []
-      for (i = 1; i <= n; i++) {
-          res.push(i);
-      }
-      return res;
+    $scope.getScore = function(){
+      return _.countBy($scope.winners, function(winner){
+        return winner == 'X' ? 'X': 'O';
+      })
     }
+
   });

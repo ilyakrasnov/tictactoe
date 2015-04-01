@@ -20,8 +20,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{ xScore }}</td>
-                            <td>{{  oScore }}</td>
+                            <td>{{ getScore()['X'] || 0}}</td>
+                            <td>{{  getScore()['O'] || 0}}</td>
                         </tr>
                     </tbody>
                 </table>
