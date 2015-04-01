@@ -2,10 +2,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Tic Tac Toe</title>
-    <!-- <script src="source/angular.js" type="text/javascript"></script> -->
-    <!-- <script src="source/underscore.js" type="text/javascript"></script> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.2/underscore-min.js" type="text/javascript"></script>
+    <script src="source/angular.js" type="text/javascript"></script>
+    <script src="source/underscore.js" type="text/javascript"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.2/underscore-min.js" type="text/javascript"></script>-->
 <link rel="stylesheet" type="text/css" href="main.css"></head>
 <body>
     <div class="container">
@@ -32,12 +32,12 @@
                 <!-- Board -->
                 <div class="game">
                     <table class="game-table">
-                        <tr ng-repeat="dimension in canvasArray(canvas_size)">
-                            <td ng-repeat="dimension in canvasArray(canvas_size)"
+                        <tr ng-repeat="dimension in settings.dimensions">
+                            <td ng-repeat="dimension in settings.dimensions"
                                 ng-class="{'won': checkWin(),
-                                           'empty': !checkWin() || gameStart()}"
+                                           'empty': !gameOver()}"
                                 ng-click="updateMoves($parent.$index,  $index)">
-                                {{ game[$parent.$index][$index] }}
+                                {{ game.match.board[$parent.$index][$index] }}
                             </td>
                         </tr>
                     </table>
@@ -58,7 +58,7 @@
                 </div>
                 <div class="gameOver" ng-show="checkWin()">
                     <div class="gameResults">
-                    {{ match.lastWinner }} Won!
+                    {{ game.match.lastWinner }} Won!
                     </div>
                     <div class="buttons">
                         <div class="btn-play-again" ng-click="playAgain()">Play again</div>
@@ -67,22 +67,7 @@
                 </div>
 
             </div>
-            <!-- <div class="playerMode">
-                <div class="multiPlayer"
-                     ng-show="multiplayer"
-                     ng-init="disabled = gameStart()"
-                     ng-disabled='disabled'
-                     ng-click="disabled || setComputerPlayer()">
-                     Two Players
-                </div>
-                <div class="singlelayer"
-                     ng-hide="multiplayer"
-                     ng-init="disabled = gameStart()"
-                     ng-disabled='disabled'
-                     ng-click="disabled || setComputerPlayer()">
-                     Play Against Super Computer
-                </div>
-            </div> -->
+
             <footer>
                 &copy Ilya Krasnov
             </footer>
