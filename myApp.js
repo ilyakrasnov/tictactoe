@@ -1,13 +1,13 @@
 angular.module('ticTacToe', [])
   .controller('TicTacToeCtrl', function($scope) {
-    $scope.dimensions = [1, 2, 3]
+    $scope.canvas_size = 3;
     $scope.players = ["O", "X"];
 
-    $scope.multiplayer = false
+    $scope.multiplayer = true
 
     $scope.moves = 0;
-    $scope.game = []
-    $scope.emptyCells = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    $scope.game = [[],[],[]];
+    $scope.emptyCells = [[0, 1, 2],[0, 1, 2],[0, 1, 2]]
 
     $scope.winners = [];
     $scope.xScore = 0;
@@ -18,19 +18,18 @@ angular.module('ticTacToe', [])
       return _.last($scope.winners)[0];
     }
 
-    $scope.updateMoves = function(position){
-      console.log($scope.gameStart());
+    $scope.updateMoves = function(position1, position2){
       if ($scope.moves == 9) return;
-      if ($scope.game[position] != null) return;
+      if ($scope.game[position1][position2] != null) return;
 
-      updateEmptyCells(position);
+      updateEmptyCells(position1, position2);
       $scope.moves++;
 
-      $scope.game[position] =  $scope.players[$scope.moves%2];
+      $scope.game[position1][position2] =  $scope.players[$scope.moves%2];
 
       if ($scope.checkWin() == true) {
 
-        $scope.winners = $scope.winners.concat($scope.game[position].split(""));
+        $scope.winners = $scope.winners.concat($scope.game[position1][position2].split(""));
 
         updateScore();
         return
@@ -48,14 +47,14 @@ angular.module('ticTacToe', [])
 
     $scope.checkWin = function(){
       game = $scope.game
-      return  (compare(game[0], game[1], game[2]) ||
-               compare(game[3], game[4], game[5]) ||
-               compare(game[6], game[7], game[8]) ||
-               compare(game[0], game[3], game[6]) ||
-               compare(game[1], game[4], game[7]) ||
-               compare(game[2], game[5], game[8]) ||
-               compare(game[0], game[4], game[8]) ||
-               compare(game[2], game[4], game[6]));
+      return  (compare(game[0][0], game[0][1], game[0][2]) ||
+               compare(game[1][0], game[1][1], game[1][2]) ||
+               compare(game[2][0], game[2][1], game[2][2]) ||
+               compare(game[0][0], game[1][0], game[2][0]) ||
+               compare(game[0][1], game[1][1], game[2][1]) ||
+               compare(game[0][2], game[1][2], game[2][2]) ||
+               compare(game[0][0], game[1][1], game[2][2]) ||
+               compare(game[0][2], game[1][1], game[2][0]));
     }
 
 
@@ -68,10 +67,10 @@ angular.module('ticTacToe', [])
     }
 
     $scope.playAgain = function(){
-      $scope.game = [];
+      $scope.game = [[],[],[]];
       $scope.moves = 0;
       $scope.winners = [];
-      $scope.emptyCells = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+      $scope.emptyCells = [[0, 1, 2],[0, 1, 2],[0, 1, 2]]
     }
 
     $scope.reset = function(){
@@ -82,8 +81,8 @@ angular.module('ticTacToe', [])
     }
 
 // Helper functions
-    var updateEmptyCells = function(position){
-      $scope.emptyCells = _.without($scope.emptyCells, position);
+    var updateEmptyCells = function(position1, position2){
+      $scope.emptyCells[position1] = _.without($scope.emptyCells[position1], position2);
     }
 
     var compare = function(a, b, c) {
@@ -101,4 +100,11 @@ angular.module('ticTacToe', [])
       return ($scope.moves % 2 != 0)
     }
 
+    $scope.canvasArray = function(n){
+      res = []
+      for (i = 1; i <= n; i++) {
+          res.push(i);
+      }
+      return res;
+    }
   });
