@@ -1,32 +1,37 @@
 angular.module('ticTacToe', [])
   .controller('TicTacToeCtrl', function($scope) {
-    $scope.canvas_size = 3;
-    $scope.game = [[],[],[]];
-    $scope.emptyCells = [[0, 1, 2],[0, 1, 2],[0, 1, 2]]
-    $scope.players = ["O", "X"];
+    var initial_match = {
+      players: ["O", "X"],
+      game: [[],[],[]],
+      emptyCells: [[0, 1, 2],[0, 1, 2],[0, 1, 2]],
+      lastWinner: ""
+    }
+
     $scope.winners = [];
+    $scope.canvas_size = 3;
+
+    $scope.match = initial_match;
+
+    $scope.game = [[],[],[]];
 
     $scope.multiplayer = true
 
 
-    $scope.lastWinner = "";
-
     $scope.updateMoves = function(position1, position2){
-      if (numberOfMoves() == 9) return;
-      if ($scope.game[position1][position2] != null) return;
+      if (gameEmptyOrSameCellClicked(position1,position2)== true) return;
 
-      updateEmptyCells(position1, position2);
-
-      $scope.game[position1][position2] =  $scope.players[(numberOfMoves()+1)%2];
+      $scope.game[position1][position2] =  $scope.match.players[(numberOfMoves()+1)%2];
 
       if ($scope.checkWin() == true) {
         $scope.winners = $scope.winners.concat($scope.game[position1][position2]);
-        $scope.lastWinner = $scope.game[position1][position2];
+        $scope.match.lastWinner = $scope.game[position1][position2];
         return
       }
 
+      updateEmptyCells(position1, position2);
+
       if ($scope.multiplayer == false && computersMove() == true) {
-        next_position = _.sample($scope.emptyCells);
+        next_position = _.sample($scope.match.emptyCells);
         $scope.updateMoves(next_position);
       };
     }
@@ -57,7 +62,7 @@ angular.module('ticTacToe', [])
 
     $scope.playAgain = function(){
       $scope.game = [[],[],[]];
-      $scope.emptyCells = [[0, 1, 2],[0, 1, 2],[0, 1, 2]]
+      $scope.match.emptyCells = [[0, 1, 2],[0, 1, 2],[0, 1, 2]];
     }
 
     $scope.reset = function(){
@@ -80,8 +85,12 @@ angular.module('ticTacToe', [])
     }
 
 // Helper functions
+    var gameEmptyOrSameCellClicked = function(position1,position2){
+      return (numberOfMoves() == 9) || ($scope.game[position1][position2] != null);
+    }
+
     var updateEmptyCells = function(position1, position2){
-      $scope.emptyCells[position1] = _.without($scope.emptyCells[position1], position2);
+      $scope.match.emptyCells[position1] = _.without($scope.match.emptyCells[position1], position2);
     }
 
     var compare = function(a, b, c) {
