@@ -1,34 +1,27 @@
 angular.module('ticTacToe', [])
   .controller('TicTacToeCtrl', function($scope) {
     $scope.canvas_size = 3;
+    $scope.game = [[],[],[]];
+    $scope.emptyCells = [[0, 1, 2],[0, 1, 2],[0, 1, 2]]
     $scope.players = ["O", "X"];
+    $scope.winners = [];
 
     $scope.multiplayer = true
 
-    $scope.moves = 0;
-    $scope.game = [[],[],[]];
-    $scope.emptyCells = [[0, 1, 2],[0, 1, 2],[0, 1, 2]]
 
-    $scope.winners = [];
-    // $scope.xScore = get;
-    // $scope.oScore = 0;
-
-    $scope.lastWinner = function(){
-     if ($scope.winners.length > 0)
-      return _.last($scope.winners)[0];
-    }
+    $scope.lastWinner = "";
 
     $scope.updateMoves = function(position1, position2){
-      if ($scope.moves == 9) return;
+      if (numberOfMoves() == 9) return;
       if ($scope.game[position1][position2] != null) return;
 
       updateEmptyCells(position1, position2);
-      $scope.moves++;
 
-      $scope.game[position1][position2] =  $scope.players[$scope.moves%2];
+      $scope.game[position1][position2] =  $scope.players[(numberOfMoves()+1)%2];
 
       if ($scope.checkWin() == true) {
         $scope.winners = $scope.winners.concat($scope.game[position1][position2]);
+        $scope.lastWinner = $scope.game[position1][position2];
         return
       }
 
@@ -54,18 +47,16 @@ angular.module('ticTacToe', [])
                compare(game[0][2], game[1][1], game[2][0]));
     }
 
-
     $scope.gameStart = function(){
-      return ($scope.moves == 0);
+      return (numberOfMoves() == 0);
     }
 
     $scope.gameOver = function() {
-      return ($scope.moves >= 9 &&  $scope.checkWin != true);
+      return (numberOfMoves() >= 9 &&  $scope.checkWin != true);
     }
 
     $scope.playAgain = function(){
       $scope.game = [[],[],[]];
-      $scope.moves = 0;
       $scope.emptyCells = [[0, 1, 2],[0, 1, 2],[0, 1, 2]]
     }
 
@@ -82,6 +73,12 @@ angular.module('ticTacToe', [])
       return res;
     }
 
+    $scope.getScore = function(){
+      return _.countBy($scope.winners, function(winner){
+        return winner == 'X' ? 'X': 'O';
+      })
+    }
+
 // Helper functions
     var updateEmptyCells = function(position1, position2){
       $scope.emptyCells[position1] = _.without($scope.emptyCells[position1], position2);
@@ -92,13 +89,15 @@ angular.module('ticTacToe', [])
     }
 
     var computersMove = function(){
-      return ($scope.moves % 2 != 0)
+      return (numberOfMoves()% 2 != 0)
     }
 
-    $scope.getScore = function(){
-      return _.countBy($scope.winners, function(winner){
-        return winner == 'X' ? 'X': 'O';
-      })
-    }
+    var numberOfMoves = function(){
+      flat_game = _.flatten($scope.game);
 
+      moves = _.countBy(flat_game, function(move){
+        return _.contains(['X','O'], move) ? 'Moves' : 'Empty';
+      });
+      return moves['Moves'] || 0;
+    }
   });
