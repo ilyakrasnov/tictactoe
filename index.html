@@ -32,8 +32,7 @@
                 <!-- Board -->
                 <div class="game">
                     <table class="game-table">
-                        <tr ng-animate="'animate'"
-                        ng-repeat="dimension in canvasArray(canvas_size)">
+                        <tr ng-repeat="dimension in canvasArray(canvas_size)">
                             <td ng-repeat="dimension in canvasArray(canvas_size)"
                                 ng-class="{'won': checkWin(),
                                            'empty': !checkWin() || gameStart()}"
