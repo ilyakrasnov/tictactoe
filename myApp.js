@@ -1,30 +1,30 @@
 angular.module('ticTacToe', [])
-  .controller('TicTacToeCtrl', function($scope) {
-    $scope.settings = {
-      players: ["O", "X"],
-      dimensions: [1,2,3]
+  .factory('Game', function(Settings){
+    var export_ = {
+      match: Settings.emptyMatch(),
+      winners: [],
+      resetMatch: function(){
+        export_.match = Settings.emptyMatch()
+      },
+      resetGame: function(){
+        export_.resetMatch();
+        export_.winners = [];
+      }
     }
-
-    var empty_match = {
-      board: [[],[],[]],
-      lastWinner: ""
-    }
-
-    var empty_game = {
-      match: angular.copy(empty_match),
-      winners: []
-    }
-
-    $scope.game = angular.copy(empty_game);
+    return export_
+  })
+  .controller('TicTacToeCtrl', function($scope, Settings, Game) {
+    $scope.settings = Settings;
+    $scope.game = Game;
 
     $scope.updateMoves = function(position1, position2){
       if (gameEmptyOrSameCellClicked(position1,position2)== true) return;
 
-      $scope.game.match.board[position1][position2] =  $scope.settings.players[(numberOfMoves()+1)%2];
+      Game.match.board[position1][position2] =  Settings.players[(numberOfMoves()+1)%2];
 
       if ($scope.checkWin() == true) {
-        $scope.game.winners = $scope.game.winners.concat($scope.game.match.board[position1][position2]);
-        $scope.game.match.lastWinner = $scope.game.match.board[position1][position2];
+        Game.winners = Game.winners.concat(Game.match.board[position1][position2]);
+        Game.match.lastWinner = Game.match.board[position1][position2];
         return
       }
     }
@@ -34,7 +34,7 @@ angular.module('ticTacToe', [])
     }
 
     $scope.checkWin = function(){
-      game = $scope.game.match.board
+      game = Game.match.board
       return  (compare(game[0][0], game[0][1], game[0][2]) ||
                compare(game[1][0], game[1][1], game[1][2]) ||
                compare(game[2][0], game[2][1], game[2][2]) ||
@@ -53,23 +53,15 @@ angular.module('ticTacToe', [])
       return (numberOfMoves() >= 9 &&  $scope.checkWin != true);
     }
 
-    $scope.playAgain = function(){
-      $scope.game.match = angular.copy(empty_match);
-    }
-
-    $scope.reset = function(){
-      $scope.game = angular.copy(empty_game);
-    }
-
     $scope.getScore = function(){
-      return _.countBy($scope.game.winners, function(winner){
+      return _.countBy(Game.winners, function(winner){
         return winner == 'X' ? 'X': 'O';
       })
     }
 
 // Helper functions
     var gameEmptyOrSameCellClicked = function(position1,position2){
-      return (numberOfMoves() == 9) || ($scope.game.match.board[position1][position2] != null);
+      return (numberOfMoves() == 9) || (Game.match.board[position1][position2] != null);
     }
 
     var compare = function(a, b, c) {
@@ -77,7 +69,7 @@ angular.module('ticTacToe', [])
     }
 
     var numberOfMoves = function(){
-      flat_game = _.flatten($scope.game.match.board);
+      flat_game = _.flatten(Game.match.board);
 
       moves = _.countBy(flat_game, function(move){
         return _.contains(['X','O'], move) ? 'Moves' : 'Empty';

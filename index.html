@@ -21,8 +21,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{ getScore()['X'] || 0}}</td>
-                            <td>{{  getScore()['O'] || 0}}</td>
+                            <td>{{ game.getScore()['X'] || 0}}</td>
+                            <td>{{  game.getScore()['O'] || 0}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -32,8 +32,8 @@
                 <!-- Board -->
                 <div class="game">
                     <table class="game-table">
-                        <tr ng-repeat="dimension in settings.dimensions">
-                            <td ng-repeat="dimension in settings.dimensions"
+                        <tr ng-repeat="dimension in settings.getDimension()">
+                            <td ng-repeat="dimension in settings.getDimension()"
                                 ng-class="{'won': checkWin(),
                                            'empty': !gameOver()}"
                                 ng-click="updateMoves($parent.$index,  $index)">
@@ -61,8 +61,8 @@
                     {{ game.match.lastWinner }} Won!
                     </div>
                     <div class="buttons">
-                        <div class="btn-play-again" ng-click="playAgain()">Play again</div>
-                        <div class="reset" ng-click="reset()">Start all over</div>
+                        <div class="btn-play-again" ng-click="game.resetMatch()">Play again</div>
+                        <div class="reset" ng-click="game.resetGame()">Start all over</div>
                     </div>
                 </div>
 
@@ -75,5 +75,7 @@
     </div>
 
     <script src="myApp.js"></script>
+    <script src="settings.js"></script>
+    <script src="game.js"></script>
 </body>
 </html>
